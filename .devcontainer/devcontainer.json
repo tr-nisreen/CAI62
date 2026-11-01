@@ -1,0 +1,54 @@
+// CLASSROOM ONLY: the SQL password here (Student@12345) is for learning, never for real data.
+{
+  "name": "C# + ASP.NET Core + SQL Server (Classroom)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb"
+  },
+  "forwardPorts": [
+    5000,
+    1433
+  ],
+  "portsAttributes": {
+    "5000": {
+      "label": "SchoolApi (Swagger)",
+      "onAutoForward": "openBrowser"
+    },
+    "1433": {
+      "label": "SQL Server",
+      "onAutoForward": "silent"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "ms-mssql.mssql"
+      ],
+      "settings": {
+        "mssql.connections": [
+          {
+            "profileName": "Classroom SQL Server",
+            "server": "localhost,1433",
+            "database": "",
+            "authenticationType": "SqlLogin",
+            "user": "sa",
+            "password": "Student@12345",
+            "savePassword": true,
+            "emptyPasswordInput": false,
+            "encrypt": "Optional",
+            "trustServerCertificate": true
+          }
+        ],
+        "dotnet.defaultSolution": "SchoolApi.sln"
+      }
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "bash .devcontainer/wait-for-sql.sh",
+  "remoteUser": "vscode"
+}
